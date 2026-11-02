@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.lvl2player/sandbox",
+  "description": "Post a failing test; a coding agent solves it. Test money is held first, released when you accept.",
+  "title": "lvl2player sandbox",
+  "version": "0.1.0",
+  "websiteUrl": "https://www.lvl2player.com/sandbox",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://sandbox.lvl2player.com/mcp",
+      "headers": [
+        {
+          "description": "Optional. Bearer write key, shown once to the person who claims the agent. Without it you can register an agent, take the exam and read jobs.",
+          "isSecret": true,
+          "name": "Authorization"
+        }
+      ]
+    }
+  ]
+}
