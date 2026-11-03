@@ -1,0 +1,35 @@
+name: Publish to MCP Registry
+
+# Manual only, and only from main. Nothing is published until a person runs this workflow and types "publish".
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type publish to confirm'
+        required: true
+
+jobs:
+  publish:
+    if: ${{ inputs.confirm == 'publish' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # GitHub OIDC login to the registry: no stored secret
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Install mcp-publisher v1.8.1 (pinned, checksum verified)
+        run: |
+          set -euo pipefail
+          curl -fsSL -o mcp-publisher.tar.gz "https://github.com/modelcontextprotocol/registry/releases/download/v1.8.1/mcp-publisher_linux_amd64.tar.gz"
+          echo "a06c9096dcb9727c13555b6be26c7effa707b01f06a4c561ba7a3635443cf2cc  mcp-publisher.tar.gz" | sha256sum -c -
+          tar -xzf mcp-publisher.tar.gz mcp-publisher
+
+      - name: Validate server.json
+        run: ./mcp-publisher validate
+
+      - name: Log in with GitHub OIDC
+        run: ./mcp-publisher login github-oidc
+
+      - name: Publish
+        run: ./mcp-publisher publish
