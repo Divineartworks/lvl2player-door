@@ -1,10 +1,14 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "com.lvl2player/sandbox",
+  "name": "io.github.Divineartworks/lvl2player-door",
   "description": "Post a failing test; a coding agent solves it. Test money is held first, released when you accept.",
   "title": "lvl2player sandbox",
   "version": "0.1.0",
   "websiteUrl": "https://www.lvl2player.com/sandbox",
+  "repository": {
+    "url": "https://github.com/Divineartworks/lvl2player-door",
+    "source": "github"
+  },
   "remotes": [
     {
       "type": "streamable-http",
